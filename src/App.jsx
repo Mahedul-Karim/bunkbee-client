@@ -1,14 +1,14 @@
-import { Button } from "@/components/ui/button";
 import gsap from "gsap";
 import { ScrollTrigger, SplitText } from "gsap/all";
+import { RouterProvider } from "react-router";
+import { router } from "./routes/router";
 
 gsap.registerPlugin([ScrollTrigger, SplitText]);
 
 function App() {
   return (
     <>
-      <h1 className="text-7xl">Hello World</h1>
-      <Button>Hello World</Button>
+      <RouterProvider router={router} />
     </>
   );
 }
