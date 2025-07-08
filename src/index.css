@@ -92,3 +92,9 @@
 body{
   font-family: "Inter",sans-serif;
 }
+
+@utility text-gradient {
+  background: linear-gradient(90deg, var(--primary) 30%, #FF6B6B);
+  background-clip: text;
+  color: transparent;
+}
