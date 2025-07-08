@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetDescription,
   SheetFooter,
@@ -40,25 +41,29 @@ const MobileNav = () => {
           <ul className="flex flex-col gap-4" id="nav-container">
             {NAV_LINKS?.map((nav, i) => (
               <li key={i}>
-                <Link
-                  to={nav.to}
-                  className={`flex items-center gap-2  px-2 rounded-md h-10 font-medium border  ${
-                    pathname === nav.to
-                      ? "border-primary text-primary"
-                      : "border-transparent text-dark"
-                  }`}
-                >
-                  {nav.icon}
-                  {nav.label}
-                </Link>
+                <SheetClose asChild>
+                  <Link
+                    to={nav.to}
+                    className={`flex items-center gap-2  px-2 rounded-md h-10 font-medium border  ${
+                      pathname === nav.to
+                        ? "border-primary text-primary"
+                        : "border-transparent text-dark"
+                    }`}
+                  >
+                    {nav.icon}
+                    {nav.label}
+                  </Link>
+                </SheetClose>
               </li>
             ))}
           </ul>
         </nav>
         <SheetFooter>
-          <Button asChild className={"font-semibold"}>
-            <Link to={"/login"}>Join Us</Link>
-          </Button>
+          <SheetClose asChild>
+            <Button asChild className={"font-semibold"}>
+              <Link to={"/login"}>Join Us</Link>
+            </Button>
+          </SheetClose>
         </SheetFooter>
       </SheetContent>
     </Sheet>
