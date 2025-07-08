@@ -98,7 +98,7 @@ body{
 }
 
 @utility text-gradient {
-  background: linear-gradient(90deg, var(--primary) 30%, #FF6B6B);
+  background: linear-gradient(90deg, var(--primary) 30%, #FF4F81);
   background-clip: text;
   color: transparent;
 }
