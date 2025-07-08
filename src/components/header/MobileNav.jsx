@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Sheet,
   SheetContent,
@@ -15,12 +15,10 @@ import { Link, useLocation } from "react-router";
 import { NAV_LINKS } from "@/lib/data";
 
 const MobileNav = () => {
-  const [open, setOpen] = useState(false);
-
   const { pathname } = useLocation();
 
   return (
-    <Sheet open={open} onOpenChange={setOpen}>
+    <Sheet>
       <SheetTrigger>
         <AlignRight className="text-dark" />
       </SheetTrigger>
@@ -39,7 +37,7 @@ const MobileNav = () => {
           </SheetDescription>
         </SheetHeader>
         <nav className="px-4">
-          <ul className="flex flex-col gap-4">
+          <ul className="flex flex-col gap-4" id="nav-container">
             {NAV_LINKS?.map((nav, i) => (
               <li key={i}>
                 <Link
