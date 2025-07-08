@@ -47,7 +47,7 @@ const Banner = () => {
   }, []);
 
   return (
-    <section className="l-container mt-4 bg-[url('/banner.avif')] bg-cover bg-no-repeat bg-center min-h-[400px] sm:min-h-[450px] rounded-2xl relative z-[1] overflow-clip px-4 sm:px-10 grid">
+    <section className="l-container mt-4 bg-[url('/banner.avif')] bg-cover bg-no-repeat bg-center min-h-[400px] sm:min-h-[500px] rounded-2xl relative z-[1] overflow-clip px-4 sm:px-10 grid">
       <div className="absolute inset-0 bg-black/60 -z-1"></div>
       <div className="flex flex-col gap-4 justify-center">
         <h1
@@ -61,7 +61,7 @@ const Banner = () => {
           admins to manage meals and student data with ease.
         </p>
         <div
-          className="max-w-[500px] my-4 flex items-center rounded-full h-10 sm:h-12 bg-white w-0 opacity-0"
+          className="max-w-[450px] mt-4 flex items-center rounded-full h-10 sm:h-12 bg-white w-0 opacity-0"
           ref={searchRef}
         >
           <div className="flex items-center grow pl-4">
