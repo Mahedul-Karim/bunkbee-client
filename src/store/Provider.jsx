@@ -8,15 +8,13 @@ const Provider = ({ children }) => {
 
   const appToken = localStorage.getItem("token") || null;
 
-  console.log(appToken);
-
   const [token, setToken] = useState(appToken);
 
   const handleUser = (user, token) => {
     setUser(user);
     setToken(token);
     setIsLoading(false);
-    localStorage.setItem('token',token)
+    localStorage.setItem("token", token);
   };
 
   return (

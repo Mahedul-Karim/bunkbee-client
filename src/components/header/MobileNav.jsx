@@ -14,9 +14,12 @@ import Logo from "../common/Logo";
 import { Button } from "../ui/button";
 import { Link, useLocation } from "react-router";
 import { NAV_LINKS } from "@/lib/data";
+import { useStore } from "@/store/Provider";
 
 const MobileNav = () => {
   const { pathname } = useLocation();
+
+  const { user } = useStore()
 
   return (
     <Sheet>
@@ -59,11 +62,11 @@ const MobileNav = () => {
           </ul>
         </nav>
         <SheetFooter>
-          <SheetClose asChild>
+          {!user && <SheetClose asChild>
             <Button asChild className={"font-semibold"}>
               <Link to={"/login"}>Join Us</Link>
             </Button>
-          </SheetClose>
+          </SheetClose>}
         </SheetFooter>
       </SheetContent>
     </Sheet>
