@@ -6,8 +6,7 @@ import { Link } from "react-router";
 const Footer = () => {
   return (
     <footer
-      className={`pt-8 md:pt-16  bg-background"
-      }`}
+      className={`pt-8 md:pt-16  bg-background`}
     >
       <section className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 l-container">
         <div>

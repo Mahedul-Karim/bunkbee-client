@@ -1,6 +1,7 @@
 import NotFound from "@/components/error/NotFound";
 import Root from "@/layout/Root";
 import Home from "@/pages/Home";
+import MealDetails from "@/pages/MealDetails";
 import Meals from "@/pages/Meals";
 import { createBrowserRouter } from "react-router";
 
@@ -17,6 +18,10 @@ export const router = createBrowserRouter([
       {
         path:'/meals',
         element:<Meals />
+      },
+      {
+        path:'/meal/:mealId',
+        element:<MealDetails />
       }
     ],
   },

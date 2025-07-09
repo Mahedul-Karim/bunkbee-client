@@ -5,11 +5,11 @@ const Ratings = ({ rating }) => {
 
   for (let i = 1; i < 6; i++) {
     if (i <= rating) {
-      stars.push(<Star className="fill-yellow-400 stroke-0 size-4.5" />);
+      stars.push(<Star className="fill-yellow-400 stroke-0 size-4" />);
     } else if (i === Math.ceil(rating) && !Number.isInteger(rating)) {
       stars.push(
         <span className="relative">
-          <Star className="fill-gray-400 stroke-0 size-4" />
+          <Star className="fill-gray-300 stroke-0 size-4" />
           <Star
             className="fill-yellow-400 stroke-0 absolute top-0 left-0 size-4"
             style={{ clipPath: "inset(0 50% 0 0)" }}
@@ -17,7 +17,7 @@ const Ratings = ({ rating }) => {
         </span>
       );
     } else {
-      stars.push(<Star className="fill-gray-400 stroke-0 size-4" />);
+      stars.push(<Star className="fill-gray-300 stroke-0 size-4" />);
     }
   }
 

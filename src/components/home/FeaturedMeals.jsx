@@ -69,6 +69,7 @@ const FeaturedMeals = ({ meals = [] }) => {
             image={meal?.image}
             rating={meal?.rating}
             price={meal?.price}
+            status={meal?.status}
           />
         ))}
       </div>

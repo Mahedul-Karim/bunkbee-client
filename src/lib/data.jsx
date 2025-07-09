@@ -34,6 +34,7 @@ export const MEALS = [
     reviews_count: 0,
     distributor_name: "John Doe",
     distributor_email: "test@gmail.com",
+    distributor_avatar:""
   },
   {
     title: "Vegetable Pasta",
@@ -49,6 +50,7 @@ export const MEALS = [
     reviews_count: 0,
     distributor_name: "John Doe",
     distributor_email: "test@gmail.com",
+    distributor_avatar:""
   },
   {
     title: "Cheese Omelette",
@@ -65,6 +67,7 @@ export const MEALS = [
     reviews_count: 0,
     distributor_name: "John Doe",
     distributor_email: "test@gmail.com",
+    distributor_avatar:""
   },
   {
     title: "Paneer Butter Masala",
@@ -80,6 +83,7 @@ export const MEALS = [
     reviews_count: 0,
     distributor_name: "John Doe",
     distributor_email: "test@gmail.com",
+    distributor_avatar:""
   },
   {
     title: "Fruit Salad",
@@ -96,6 +100,7 @@ export const MEALS = [
     reviews_count: 0,
     distributor_name: "John Doe",
     distributor_email: "test@gmail.com",
+    distributor_avatar:""
   },
   {
     title: "Chicken Curry",
@@ -111,6 +116,7 @@ export const MEALS = [
     reviews_count: 0,
     distributor_name: "John Doe",
     distributor_email: "test@gmail.com",
+    distributor_avatar:""
   },
   {
     title: "Veg Sandwich",
@@ -126,6 +132,7 @@ export const MEALS = [
     reviews_count: 0,
     distributor_name: "John Doe",
     distributor_email: "test@gmail.com",
+    distributor_avatar:""
   },
   {
     title: "Dal Tadka",
@@ -141,6 +148,7 @@ export const MEALS = [
     reviews_count: 0,
     distributor_name: "John Doe",
     distributor_email: "test@gmail.com",
+    distributor_avatar:""
   },
   {
     title: "Veg Fried Rice",
@@ -156,6 +164,7 @@ export const MEALS = [
     reviews_count: 0,
     distributor_name: "John Doe",
     distributor_email: "test@gmail.com",
+    distributor_avatar:""
   },
   {
     title: "Pancakes with Syrup",
@@ -171,6 +180,7 @@ export const MEALS = [
     reviews_count: 0,
     distributor_name: "John Doe",
     distributor_email: "test@gmail.com",
+    distributor_avatar:""
   },
   {
     title: "Chole Bhature",
@@ -186,6 +196,7 @@ export const MEALS = [
     reviews_count: 0,
     distributor_name: "John Doe",
     distributor_email: "test@gmail.com",
+    distributor_avatar:""
   },
   {
     title: "Fruit Smoothie",
@@ -201,6 +212,7 @@ export const MEALS = [
     reviews_count: 0,
     distributor_name: "John Doe",
     distributor_email: "test@gmail.com",
+    distributor_avatar:""
   },
   {
     title: "Masala Dosa",
@@ -216,6 +228,7 @@ export const MEALS = [
     reviews_count: 0,
     distributor_name: "John Doe",
     distributor_email: "test@gmail.com",
+    distributor_avatar:""
   },
   {
     title: "Veg Biryani",
@@ -231,6 +244,7 @@ export const MEALS = [
     reviews_count: 0,
     distributor_name: "John Doe",
     distributor_email: "test@gmail.com",
+    distributor_avatar:""
   },
   {
     title: "Chapati with Sabzi",
@@ -246,6 +260,7 @@ export const MEALS = [
     reviews_count: 0,
     distributor_name: "John Doe",
     distributor_email: "test@gmail.com",
+    distributor_avatar:""
   },
   {
     title: "Mango Lassi",
@@ -261,6 +276,7 @@ export const MEALS = [
     reviews_count: 0,
     distributor_name: "John Doe",
     distributor_email: "test@gmail.com",
+    distributor_avatar:""
   },
   {
     title: "Egg Fried Rice",
@@ -276,6 +292,7 @@ export const MEALS = [
     reviews_count: 0,
     distributor_name: "John Doe",
     distributor_email: "test@gmail.com",
+    distributor_avatar:""
   },
   {
     title: "Aloo Paratha",
@@ -291,6 +308,7 @@ export const MEALS = [
     reviews_count: 0,
     distributor_name: "John Doe",
     distributor_email: "test@gmail.com",
+    distributor_avatar:""
   },
   {
     title: "Chicken Wrap",
@@ -306,6 +324,7 @@ export const MEALS = [
     reviews_count: 0,
     distributor_name: "John Doe",
     distributor_email: "test@gmail.com",
+    distributor_avatar:""
   },
   {
     title: "Tomato Soup",
@@ -321,6 +340,7 @@ export const MEALS = [
     reviews_count: 0,
     distributor_name: "John Doe",
     distributor_email: "test@gmail.com",
+    distributor_avatar:""
   },
   {
     title: "Banana Pancakes",
@@ -336,6 +356,7 @@ export const MEALS = [
     reviews_count: 0,
     distributor_name: "John Doe",
     distributor_email: "test@gmail.com",
+    distributor_avatar:""
   },
   {
     title: "Fish Curry",
@@ -351,6 +372,7 @@ export const MEALS = [
     reviews_count: 0,
     distributor_name: "John Doe",
     distributor_email: "test@gmail.com",
+    distributor_avatar:""
   },
   {
     title: "Club Sandwich",
@@ -366,6 +388,7 @@ export const MEALS = [
     reviews_count: 0,
     distributor_name: "John Doe",
     distributor_email: "test@gmail.com",
+    distributor_avatar:""
   },
   {
     title: "Veg Pulao",
@@ -381,6 +404,7 @@ export const MEALS = [
     reviews_count: 0,
     distributor_name: "John Doe",
     distributor_email: "test@gmail.com",
+    distributor_avatar:""
   },
   {
     title: "Veg Burger",
@@ -396,6 +420,7 @@ export const MEALS = [
     reviews_count: 0,
     distributor_name: "John Doe",
     distributor_email: "test@gmail.com",
+    distributor_avatar:""
   },
   {
     title: "Chicken Biryani",
@@ -411,6 +436,7 @@ export const MEALS = [
     reviews_count: 0,
     distributor_name: "John Doe",
     distributor_email: "test@gmail.com",
+    distributor_avatar:""
   },
   {
     title: "Idli with Sambar",
@@ -426,6 +452,7 @@ export const MEALS = [
     reviews_count: 0,
     distributor_name: "John Doe",
     distributor_email: "test@gmail.com",
+    distributor_avatar:""
   },
   {
     title: "Veg Momos",
@@ -441,6 +468,7 @@ export const MEALS = [
     reviews_count: 0,
     distributor_name: "John Doe",
     distributor_email: "test@gmail.com",
+    distributor_avatar:""
   },
   {
     title: "Peanut Butter Toast",
@@ -456,6 +484,7 @@ export const MEALS = [
     reviews_count: 0,
     distributor_name: "John Doe",
     distributor_email: "test@gmail.com",
+    distributor_avatar:""
   },
   {
     title: "Samosa",
@@ -471,5 +500,6 @@ export const MEALS = [
     reviews_count: 0,
     distributor_name: "John Doe",
     distributor_email: "test@gmail.com",
+    distributor_avatar:""
   },
 ];
