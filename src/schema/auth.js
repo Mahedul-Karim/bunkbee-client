@@ -5,7 +5,7 @@ export const loginSchema = z.object({
     message: "Invalid email address",
   }),
 
-  password: z.string().min(8, "Password must be at least 8 characters long"),
+  password: z.string().min(1, "Password field cannot be empty"),
 });
 
 export const signupSchema = z
