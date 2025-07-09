@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
@@ -12,8 +12,17 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { loginSchema } from "@/schema/auth";
+import { toast } from "sonner";
+import { useNavigate } from "react-router";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/lib/config/firebase.config";
+import { Loader } from "lucide-react";
 
 const LoginForm = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
+
   const form = useForm({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -22,8 +31,26 @@ const LoginForm = () => {
     },
   });
 
-  function onSubmit(values) {
-    console.log(values);
+  async function onSubmit(values) {
+    try {
+      setIsLoading(true);
+
+      const { email, password } = values;
+
+      await signInWithEmailAndPassword(auth, email, password);
+
+      form.reset();
+      toast.success("Logged in successfully");
+      navigate("/");
+    } catch (error) {
+      if (error.code === "auth/invalid-credential") {
+        return toast.error("Invalid credentials");
+      }
+
+      toast.error(error.message);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -36,7 +63,12 @@ const LoginForm = () => {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="Enter your email" className="h-10" {...field} />
+                <Input
+                  placeholder="Enter your email"
+                  className="h-10"
+                  disabled={isLoading}
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -49,13 +81,26 @@ const LoginForm = () => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="Enter your password" className="h-10" {...field} />
+                <Input
+                  type="password"
+                  placeholder="Enter your password"
+                  className="h-10"
+                  disabled={isLoading}
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" className="h-10 w-full font-semibold">Sign in</Button>
+        <Button
+          type="submit"
+          className="h-10 w-full font-semibold"
+          disabled={isLoading}
+        >
+          {isLoading && <Loader className="animate-spin" />}
+          Sign in
+        </Button>
       </form>
     </Form>
   );

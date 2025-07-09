@@ -130,6 +130,7 @@ const SignupForm = () => {
                     type="text"
                     placeholder="John Doe"
                     className={"h-10"}
+                    disabled={isLoading}
                     {...field}
                   />
                 </FormControl>
@@ -148,6 +149,7 @@ const SignupForm = () => {
                     type="email"
                     placeholder="Enter your email"
                     className={"h-10"}
+                    disabled={isLoading}
                     {...field}
                   />
                 </FormControl>
@@ -166,6 +168,7 @@ const SignupForm = () => {
                     type="password"
                     placeholder="Enter your password"
                     className={"h-10"}
+                    disabled={isLoading}
                     {...field}
                   />
                 </FormControl>
@@ -184,6 +187,7 @@ const SignupForm = () => {
                     type="password"
                     placeholder="Enter your typed password"
                     className={"h-10"}
+                    disabled={isLoading}
                     {...field}
                   />
                 </FormControl>
