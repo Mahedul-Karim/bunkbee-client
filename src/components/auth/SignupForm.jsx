@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Label } from "../ui/label";
 import { Button } from "../ui/button";
-import { Plus } from "lucide-react";
+import { Loader, Plus } from "lucide-react";
 import { Input } from "../ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -15,9 +15,23 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { signupSchema } from "@/schema/auth";
+import { useStore } from "@/store/Provider";
+import { toast } from "sonner";
+import { useAxios } from "@/hooks/useAxios";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/lib/config/firebase.config";
+import { useNavigate } from "react-router";
 
 const SignupForm = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { handleUser } = useStore();
+
+  const { axiosInstance } = useAxios();
+
   const [avatarPreview, setAvatarPreview] = useState("");
+
+  const navigate = useNavigate();
 
   const form = useForm({
     resolver: zodResolver(signupSchema),
@@ -29,9 +43,51 @@ const SignupForm = () => {
     },
   });
 
-  function onSubmit(values) {
-    console.log(values);
-  }
+  const onSubmit = async (values) => {
+    try {
+      setIsLoading(true);
+
+      const { fullName, email, password } = values;
+
+      await createUserWithEmailAndPassword(auth, email, password);
+
+      const formData = new FormData();
+
+      formData.append("image", avatarPreview);
+
+      const imgRes = await fetch(
+        `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_API}`,
+        {
+          body: formData,
+          method: "POST",
+        }
+      );
+
+      const imgData = await imgRes.json();
+
+      const avatar = imgData?.data?.url;
+
+      const { data } = await axiosInstance({
+        url: "user",
+        data: {
+          fullName,
+          email,
+          avatar,
+        },
+        method: "POST",
+      });
+
+      handleUser(data?.user, data?.token);
+      toast.success(data?.message);
+      setAvatarPreview("");
+      form.reset();
+      navigate("/");
+    } catch (err) {
+      toast.error(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <>
@@ -135,7 +191,12 @@ const SignupForm = () => {
               </FormItem>
             )}
           />
-          <Button type="submit" className="font-semibold h-10 w-full">
+          <Button
+            type="submit"
+            className="font-semibold h-10 w-full"
+            disabled={isLoading}
+          >
+            {isLoading && <Loader className="animate-spin" />}
             Create Account
           </Button>
         </form>
