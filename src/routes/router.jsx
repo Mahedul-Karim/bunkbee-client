@@ -1,6 +1,7 @@
 import NotFound from "@/components/error/NotFound";
 import Root from "@/layout/Root";
 import Home from "@/pages/Home";
+import Meals from "@/pages/Meals";
 import { createBrowserRouter } from "react-router";
 
 export const router = createBrowserRouter([
@@ -13,6 +14,10 @@ export const router = createBrowserRouter([
         index: true,
         element: <Home />,
       },
+      {
+        path:'/meals',
+        element:<Meals />
+      }
     ],
   },
 ]);
