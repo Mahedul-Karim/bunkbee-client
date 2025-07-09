@@ -1,6 +1,7 @@
 import NotFound from "@/components/error/NotFound";
 import Root from "@/layout/Root";
 import Login from "@/pages/auth/Login";
+import Signup from "@/pages/auth/Signup";
 import Home from "@/pages/Home";
 import MealDetails from "@/pages/MealDetails";
 import Meals from "@/pages/Meals";
@@ -27,6 +28,10 @@ export const router = createBrowserRouter([
       {
         path:'/login',
         element:<Login />
+      },
+      {
+        path:"/sign-up",
+        element:<Signup />
       }
     ],
   },
