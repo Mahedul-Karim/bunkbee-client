@@ -12,6 +12,8 @@ import MyProfile from "@/components/dashboard/user/MyProfile";
 import RequestedMeals from "@/components/dashboard/user/RequestedMeals";
 import MyReviews from "@/components/dashboard/user/MyReviews";
 import Transactions from "@/components/dashboard/user/Transactions";
+import AdminDashboard from "@/layout/AdminDashboard";
+import AdminProfile from "@/components/dashboard/admin/AdminProfile";
 
 export const router = createBrowserRouter([
   {
@@ -66,5 +68,19 @@ export const router = createBrowserRouter([
         element: <Transactions />,
       },
     ],
+  },
+  {
+    path: "/admin/dashboard",
+    element: (
+      <PrivateRoutes routeFor={"admin"}>
+        <AdminDashboard />
+      </PrivateRoutes>
+    ),
+    children:[
+      {
+        index:true,
+        element:<AdminProfile />
+      }
+    ]
   },
 ]);

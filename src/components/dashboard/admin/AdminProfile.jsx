@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { useStore } from "@/store/Provider";
 import { Badge } from "@/components/ui/badge";
 
-const MyProfile = () => {
+const AdminProfile = () => {
   const { user } = useStore();
 
   return (
@@ -28,10 +28,11 @@ const MyProfile = () => {
             </Badge>
           </div>
           <p className="text-sm text-muted mt-1">{user?.email}</p>
+          <Badge className="font-semibold capitalize rounded-full mt-2">30 meals added</Badge>
         </CardContent>
       </Card>
     </div>
   );
 };
 
-export default MyProfile;
+export default AdminProfile;
