@@ -14,6 +14,7 @@ import MyReviews from "@/components/dashboard/user/MyReviews";
 import Transactions from "@/components/dashboard/user/Transactions";
 import AdminDashboard from "@/layout/AdminDashboard";
 import AdminProfile from "@/components/dashboard/admin/AdminProfile";
+import AllUsers from "@/components/dashboard/admin/AllUsers";
 
 export const router = createBrowserRouter([
   {
@@ -80,6 +81,10 @@ export const router = createBrowserRouter([
       {
         index:true,
         element:<AdminProfile />
+      },
+      {
+        path:'manage-users',
+        element:<AllUsers />
       }
     ]
   },
