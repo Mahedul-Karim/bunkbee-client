@@ -10,6 +10,7 @@ import { createBrowserRouter } from "react-router";
 import PrivateRoutes from "./PrivateRoutes";
 import MyProfile from "@/components/dashboard/user/MyProfile";
 import RequestedMeals from "@/components/dashboard/user/RequestedMeals";
+import MyReviews from "@/components/dashboard/user/MyReviews";
 
 export const router = createBrowserRouter([
   {
@@ -46,15 +47,19 @@ export const router = createBrowserRouter([
         <UserDashboard />
       </PrivateRoutes>
     ),
-    children:[
+    children: [
       {
-        index:true,
-        element:<MyProfile />
+        index: true,
+        element: <MyProfile />,
       },
       {
-        path:'requested-meals',
-        element:<RequestedMeals />
-      }
-    ]
+        path: "requested-meals",
+        element: <RequestedMeals />,
+      },
+      {
+        path: "my-reviews",
+        element: <MyReviews />,
+      },
+    ],
   },
 ]);

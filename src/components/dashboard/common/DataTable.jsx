@@ -73,7 +73,7 @@ const DataTable = ({ data, columns }) => {
           ) : (
             <TableRow>
               <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
+                No results found.
               </TableCell>
             </TableRow>
           )}

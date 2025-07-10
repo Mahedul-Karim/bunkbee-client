@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import DataTable from "../common/DataTable";
 import { Button } from "@/components/ui/button";
 import { CircleCheckBig, Clock, Heart, MessageCircle, X } from "lucide-react";
@@ -187,84 +187,87 @@ const data = [
   },
 ];
 
-const columnsDef = [
-  {
-    accessorKey: "title",
-    header: "Title",
-    cell: ({ cell }) => {
-      return (
-        <h2 className="text-dark font-medium max-w-[350px] truncate">
-          {cell?.row?.original?.title}
-        </h2>
-      );
-    },
-  },
-  {
-    accessorKey: "likes",
-    header: "Likes",
-    cell: ({ cell }) => {
-      return (
-        <p className="flex items-center gap-1 text-dark/90 text-sm font-medium">
-          <Heart className="size-4 text-destructive" />
-          {cell?.row?.original?.likes}
-        </p>
-      );
-    },
-  },
-  {
-    accessorKey: "reviews_count",
-    header: "Reviews",
-    cell: ({ cell }) => {
-      return (
-        <p className="flex items-center gap-1 text-dark/90 text-sm font-medium">
-          <MessageCircle className="size-4 text-blue-700" />
-          {cell?.row?.original?.reviews_count}
-        </p>
-      );
-    },
-  },
-
-  {
-    accessorKey: "status",
-    header: "Status",
-    cell: ({ cell }) => {
-      const stats = cell?.row?.original?.status;
-
-      return (
-        <Badge
-          className={`rounded-full ${
-            stats === "delivered"
-              ? "bg-green-100 text-green-700"
-              : "bg-red-100 text-red-700"
-          } capitalize`}
-        >
-          {stats === "pending" ? <Clock /> : <CircleCheckBig />}
-          {stats}
-        </Badge>
-      );
-    },
-  },
-  {
-    id: "action",
-    header: "",
-    cell: ({ cell }) => {
-      return (
-        <Button
-          variant="ghost"
-          size={"icon"}
-          className={
-            "text-destructive hover:bg-transparent hover:text-destructive"
-          }
-          onClick={() => console.log(cell)}
-        >
-          <X className="size-5" />
-        </Button>
-      );
-    },
-  },
-];
-
 const RequestedMeals = () => {
+  const columnsDef = useMemo(
+    () => [
+      {
+        accessorKey: "title",
+        header: "Title",
+        cell: ({ cell }) => {
+          return (
+            <h2 className="text-dark font-medium max-w-[350px] truncate">
+              {cell?.row?.original?.title}
+            </h2>
+          );
+        },
+      },
+      {
+        accessorKey: "likes",
+        header: "Likes",
+        cell: ({ cell }) => {
+          return (
+            <p className="flex items-center gap-1 text-dark/90 text-sm font-medium">
+              <Heart className="size-4 text-destructive" />
+              {cell?.row?.original?.likes}
+            </p>
+          );
+        },
+      },
+      {
+        accessorKey: "reviews_count",
+        header: "Reviews",
+        cell: ({ cell }) => {
+          return (
+            <p className="flex items-center gap-1 text-dark/90 text-sm font-medium">
+              <MessageCircle className="size-4 text-blue-700" />
+              {cell?.row?.original?.reviews_count}
+            </p>
+          );
+        },
+      },
+
+      {
+        accessorKey: "status",
+        header: "Status",
+        cell: ({ cell }) => {
+          const stats = cell?.row?.original?.status;
+
+          return (
+            <Badge
+              className={`rounded-full ${
+                stats === "delivered"
+                  ? "bg-green-100 text-green-700"
+                  : "bg-red-100 text-red-700"
+              } capitalize`}
+            >
+              {stats === "pending" ? <Clock /> : <CircleCheckBig />}
+              {stats}
+            </Badge>
+          );
+        },
+      },
+      {
+        id: "action",
+        header: "",
+        cell: ({ cell }) => {
+          return (
+            <Button
+              variant="ghost"
+              size={"icon"}
+              className={
+                "text-destructive hover:bg-transparent hover:text-destructive"
+              }
+              onClick={() => console.log(cell)}
+            >
+              <X className="size-5" />
+            </Button>
+          );
+        },
+      },
+    ],
+    []
+  );
+
   return (
     <div className="bg-white rounded-md p-4">
       <DataTable data={data} columns={columnsDef} />
