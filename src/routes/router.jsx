@@ -8,6 +8,7 @@ import MealDetails from "@/pages/MealDetails";
 import Meals from "@/pages/Meals";
 import { createBrowserRouter } from "react-router";
 import PrivateRoutes from "./PrivateRoutes";
+import MyProfile from "@/components/dashboard/user/MyProfile";
 
 export const router = createBrowserRouter([
   {
@@ -44,5 +45,11 @@ export const router = createBrowserRouter([
         <UserDashboard />
       </PrivateRoutes>
     ),
+    children:[
+      {
+        index:true,
+        element:<MyProfile />
+      }
+    ]
   },
 ]);
