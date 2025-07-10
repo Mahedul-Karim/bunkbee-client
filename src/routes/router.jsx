@@ -11,6 +11,7 @@ import PrivateRoutes from "./PrivateRoutes";
 import MyProfile from "@/components/dashboard/user/MyProfile";
 import RequestedMeals from "@/components/dashboard/user/RequestedMeals";
 import MyReviews from "@/components/dashboard/user/MyReviews";
+import Transactions from "@/components/dashboard/user/Transactions";
 
 export const router = createBrowserRouter([
   {
@@ -59,6 +60,10 @@ export const router = createBrowserRouter([
       {
         path: "my-reviews",
         element: <MyReviews />,
+      },
+      {
+        path: "payment-history",
+        element: <Transactions />,
       },
     ],
   },

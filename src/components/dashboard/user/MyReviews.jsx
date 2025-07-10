@@ -68,7 +68,7 @@ const MyReviews = () => {
 
       {
         accessorKey: "rating",
-        header: "Rtatus",
+        header: "Rating",
         cell: ({ cell }) => {
           return (
             <Badge

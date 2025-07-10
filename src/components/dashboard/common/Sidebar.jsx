@@ -1,8 +1,9 @@
 import Logo from "@/components/common/Logo";
+import SheetCloseWrapper from "@/components/common/SheetCloseWrapper";
 import React from "react";
 import { Link, useLocation } from "react-router";
 
-export const Sidebar = ({ links = [] }) => {
+export const Sidebar = ({ links = [], closeOnClick = false }) => {
   const { pathname } = useLocation();
 
   return (
@@ -15,17 +16,19 @@ export const Sidebar = ({ links = [] }) => {
         <ul className="flex flex-col gap-2">
           {links?.map((link, i) => (
             <li key={i}>
-              <Link
-                to={link.to}
-                className={`flex items-center gap-2 py-3 rounded-md px-4 ${
-                  pathname === link.to
-                    ? "bg-primary text-white"
-                    : "bg-transparent text-muted"
-                } transition-colors duration-300 hover:bg-primary hover:text-white`}
-              >
-                {link.icon}
-                {link.label}
-              </Link>
+              <SheetCloseWrapper closeOnClick={closeOnClick}>
+                <Link
+                  to={link.to}
+                  className={`flex items-center gap-2 py-3 rounded-md px-4 ${
+                    pathname === link.to
+                      ? "bg-primary text-white"
+                      : "bg-transparent text-muted"
+                  } transition-colors duration-300 hover:bg-primary hover:text-white`}
+                >
+                  {link.icon}
+                  {link.label}
+                </Link>
+              </SheetCloseWrapper>
             </li>
           ))}
         </ul>

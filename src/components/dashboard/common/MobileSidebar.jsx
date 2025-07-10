@@ -38,7 +38,7 @@ const MobileSidebar = ({ links }) => {
             </SheetDescription>
           </SheetHeader>
           <div className="p-4 xs:p-6">
-            <Sidebar links={links} />
+            <Sidebar links={links} closeOnClick />
           </div>
         </SheetContent>
       </Sheet>
