@@ -37,7 +37,7 @@ const UserDashboard = () => {
       <aside className="h-screen overflow-y-auto hidden md:block bg-white border-r border-border p-4 lg:p-6">
         <Sidebar links={LINKS} />
       </aside>
-      <main>
+      <main className="overflow-x-auto">
         <header className="bg-white border-b border-border h-[70px] flex items-center">
           <section className="l-container flex items-center justify-between">
             <MobileSidebar links={LINKS} />

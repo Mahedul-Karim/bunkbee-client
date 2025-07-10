@@ -9,6 +9,7 @@ import Meals from "@/pages/Meals";
 import { createBrowserRouter } from "react-router";
 import PrivateRoutes from "./PrivateRoutes";
 import MyProfile from "@/components/dashboard/user/MyProfile";
+import RequestedMeals from "@/components/dashboard/user/RequestedMeals";
 
 export const router = createBrowserRouter([
   {
@@ -49,6 +50,10 @@ export const router = createBrowserRouter([
       {
         index:true,
         element:<MyProfile />
+      },
+      {
+        path:'requested-meals',
+        element:<RequestedMeals />
       }
     ]
   },
