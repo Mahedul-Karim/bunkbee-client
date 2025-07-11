@@ -54,26 +54,12 @@ const SignupForm = () => {
       const formData = new FormData();
 
       formData.append("image", avatarPreview);
-
-      const imgRes = await fetch(
-        `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_API}`,
-        {
-          body: formData,
-          method: "POST",
-        }
-      );
-
-      const imgData = await imgRes.json();
-
-      const avatar = imgData?.data?.url;
+      formData.append("fullName", fullName);
+      formData.append("email", email);
 
       const { data } = await axiosInstance({
         url: "user",
-        data: {
-          fullName,
-          email,
-          avatar,
-        },
+        data: formData,
         method: "POST",
       });
 
@@ -83,6 +69,7 @@ const SignupForm = () => {
       form.reset();
       navigate("/");
     } catch (err) {
+      console.log(err);
       toast.error(err.message);
     } finally {
       setIsLoading(false);
