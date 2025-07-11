@@ -38,7 +38,7 @@ const LINKS = [
     icon: <HandPlatter className="size-5" />,
   },
   {
-    to: "/admin/dashboard/upcomig-meals",
+    to: "/admin/dashboard/upcoming-meals",
     label: "Upcoming Meals",
     icon: <CalendarClock className="size-5" />,
   },
