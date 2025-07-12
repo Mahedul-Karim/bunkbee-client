@@ -18,6 +18,7 @@ const Info = ({
   distributor_avatar,
   rating,
   reviews_count,
+  reviews=[]
 }) => {
   return (
     <div className="space-y-2">
@@ -29,7 +30,7 @@ const Info = ({
           {category}
         </Badge>
         <p className="flex items-center text-muted gap-2 text-sm">
-          <Clock className="size-4" /> Posted {formatDate(postTime)}
+          <Clock className="size-4" /> Posted {formatDate(new Date(postTime))}
         </p>
       </div>
       <h1 className="text-dark text-2xl font-bold">{title}</h1>
@@ -79,7 +80,7 @@ const Info = ({
           Reviews ({reviews_count})
         </h2>
         <div className="flex flex-col gap-4 my-4">
-          {Array.from({ length: 4 }).map((_, i) => (
+          {reviews?.length > 0 && reviews?.map((_, i) => (
             <ReviewCard key={i} />
           ))}
         </div>

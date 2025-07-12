@@ -1,27 +1,9 @@
 import React from "react";
 import SectionTitle from "../common/SectionTitle";
 import MembershipCard from "../membership/MembershipCard";
+import { MEMBERSHIP } from "@/lib/data";
 
-const MEMBERSHIP = [
-  {
-    type: "silver",
-    image: "/silver.png",
-    label: "Silver",
-    price: 10,
-  },
-  {
-    type: "gold",
-    image: "/gold.png",
-    label: "Gold",
-    price: 40,
-  },
-  {
-    type: "platinum",
-    image: "/platinum.png",
-    label: "Platinum",
-    price: 100,
-  },
-];
+
 
 const Membership = () => {
   return (

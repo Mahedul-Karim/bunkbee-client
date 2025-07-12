@@ -1,4 +1,3 @@
-import { MEALS } from "@/lib/data";
 import React from "react";
 import MealsCard from "../MealsCard";
 import { useAxios } from "@/hooks/useAxios";
@@ -60,7 +59,7 @@ const Main = () => {
         loader={<div className="text-center text-muted">Loading Meals...</div>}
         endMessage={
           <div className="text-center my-4 text-muted">
-            <Empty title={'No more meals available'} />
+            <Empty title={"No more meals available"} />
           </div>
         }
         scrollableTarget="root"

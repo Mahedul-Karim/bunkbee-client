@@ -20,6 +20,7 @@ import AllMeals from "../components/dashboard/admin/AllMeals";
 import AllReviews from "@/components/dashboard/admin/AllReviews";
 import ServeMeal from "@/components/dashboard/admin/ServeMeal";
 import UpcomingMeals from "@/components/dashboard/admin/UpcomingMeals";
+import Checkout from "@/pages/Checkout";
 
 export const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ export const router = createBrowserRouter([
       {
         path: "/sign-up",
         element: <Signup />,
+      },
+      {
+        path: "/checkout/:type",
+        element: <Checkout />,
       },
     ],
   },
@@ -82,35 +87,35 @@ export const router = createBrowserRouter([
         <AdminDashboard />
       </PrivateRoutes>
     ),
-    children:[
+    children: [
       {
-        index:true,
-        element:<AdminProfile />
+        index: true,
+        element: <AdminProfile />,
       },
       {
-        path:'manage-users',
-        element:<AllUsers />
+        path: "manage-users",
+        element: <AllUsers />,
       },
       {
-        path:'add-meal',
-        element:<AddMeal />
+        path: "add-meal",
+        element: <AddMeal />,
       },
       {
-        path:'all-meals',
-        element:<AllMeals />
+        path: "all-meals",
+        element: <AllMeals />,
       },
       {
-        path:'all-reviews',
-        element:<AllReviews />
+        path: "all-reviews",
+        element: <AllReviews />,
       },
       {
-        path:'serve-meal',
-        element:<ServeMeal />
+        path: "serve-meal",
+        element: <ServeMeal />,
       },
       {
-        path:'upcoming-meals',
-        element:<UpcomingMeals />
-      }
-    ]
+        path: "upcoming-meals",
+        element: <UpcomingMeals />,
+      },
+    ],
   },
 ]);

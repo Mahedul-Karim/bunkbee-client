@@ -4,7 +4,7 @@ import { formatCurrency } from "@/lib/utils";
 import { Button } from "../ui/button";
 import { Link } from "react-router";
 
-const MembershipCard = ({ label, type, image, price }) => {
+const MembershipCard = ({ label, type, image, price,isInCheckout=false }) => {
   return (
     <Card className="bg-white shadow-none border-none">
       <CardContent className="flex flex-col items-center justify-center gap-2">
@@ -17,9 +17,9 @@ const MembershipCard = ({ label, type, image, price }) => {
         </p>
       </CardContent>
       <CardFooter>
-        <Button asChild className="w-full font-semibold bg-dark hover:bg-dark">
-          <Link to={`/checkout/${type}?price=${price}`}>Purchase</Link>
-        </Button>
+        {!isInCheckout && <Button asChild className="w-full font-semibold bg-dark hover:bg-dark">
+          <Link to={`/checkout/${type}`}>Purchase</Link>
+        </Button>}
       </CardFooter>
     </Card>
   );

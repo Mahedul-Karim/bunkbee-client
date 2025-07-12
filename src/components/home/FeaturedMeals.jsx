@@ -1,18 +1,36 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import SectionTitle from "../common/SectionTitle";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import MealsCard from "../meals/MealsCard";
+import { Loader } from "lucide-react";
+import { useAxios } from "@/hooks/useAxios";
+import { useQuery } from "@tanstack/react-query";
 
-const FeaturedMeals = ({ meals = [] }) => {
+const FeaturedMeals = () => {
   const [selectedTab, setSelectedTab] = useState("all");
-  const containerRef = useRef(null);
 
-  const filteredMeals =
-    selectedTab === "all"
-      ? [...meals]?.slice(0,10)
-      : meals?.filter(
-          (meal) => meal?.category?.toLowerCase() === selectedTab?.toLowerCase()
-        )?.slice(0,10);
+  const { axiosInstance } = useAxios();
+  
+  
+    const fetchMeals = async () => {
+  
+      const { data } = await axiosInstance({
+        url: "meals",
+        params: {
+          page: 1,
+          category:selectedTab
+        },
+      });
+  
+      return data;
+    };
+
+
+    const { data,isPending } = useQuery({
+      queryKey:['featured-meals',selectedTab],
+      queryFn:fetchMeals
+    })
+  
 
   return (
     <section className="py-8 md:py-16 l-container">
@@ -57,11 +75,13 @@ const FeaturedMeals = ({ meals = [] }) => {
           </TabsTrigger>
         </TabsList>
       </Tabs>
-      <div
+      {isPending && <div className="h-[250px] grid place-items-center">
+        <Loader className="animate-spin size-12 text-primary" />
+      </div>}
+      {!isPending && data?.meals?.length > 0 && <div
         className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 xs:gap-4 mt-8 meal-container"
-        ref={containerRef}
       >
-        {filteredMeals?.map((meal, i) => (
+        {data?.meals?.map((meal, i) => (
           <MealsCard
             key={i}
             id={meal?._id}
@@ -72,7 +92,7 @@ const FeaturedMeals = ({ meals = [] }) => {
             status={meal?.status}
           />
         ))}
-      </div>
+      </div>}
     </section>
   );
 };
