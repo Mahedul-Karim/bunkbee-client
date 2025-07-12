@@ -50,7 +50,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/checkout/:type",
-        element: <Checkout />,
+        element: (
+          <PrivateRoutes>
+            <Checkout />,
+          </PrivateRoutes>
+        ),
       },
     ],
   },

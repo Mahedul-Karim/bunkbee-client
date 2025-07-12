@@ -1,193 +1,87 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import DataTable from "../common/DataTable";
 import { Button } from "@/components/ui/button";
-import { CircleCheckBig, Clock, Heart, MessageCircle, X } from "lucide-react";
+import {
+  CircleCheckBig,
+  Clock,
+  Heart,
+  Loader,
+  MessageCircle,
+  X,
+} from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-
-const data = [
-  {
-    title: "Summer Peach Smoothie",
-    likes: 120,
-    reviews_count: 34,
-    status: "delivered",
-  },
-  {
-    title: "Classic Margherita Pizza",
-    likes: 342,
-    reviews_count: 87,
-    status: "delivered",
-  },
-  {
-    title: "Morning Yoga Routine",
-    likes: 215,
-    reviews_count: 19,
-    status: "pending",
-  },
-  {
-    title: "The Art of Mindful Eating",
-    likes: 89,
-    reviews_count: 12,
-    status: "delivered",
-  },
-  {
-    title: "10-Minute HIIT Workout",
-    likes: 410,
-    reviews_count: 76,
-    status: "delivered",
-  },
-  {
-    title: "Vegan Brownie Recipe",
-    likes: 150,
-    reviews_count: 28,
-    status: "delivered",
-  },
-  {
-    title: "How to Grow Succulents",
-    likes: 132,
-    reviews_count: 17,
-    status: "pending",
-  },
-  {
-    title: "Budget Travel Guide to Japan",
-    likes: 389,
-    reviews_count: 54,
-    status: "delivered",
-  },
-  {
-    title: "Healthy Meal Prep Ideas",
-    likes: 230,
-    reviews_count: 43,
-    status: "delivered",
-  },
-  {
-    title: "Daily Meditation for Focus",
-    likes: 95,
-    reviews_count: 11,
-    status: "pending",
-  },
-  {
-    title: "How to Bake Sourdough Bread",
-    likes: 420,
-    reviews_count: 65,
-    status: "delivered",
-  },
-  {
-    title: "Best Hiking Trails in USA",
-    likes: 300,
-    reviews_count: 39,
-    status: "delivered",
-  },
-  {
-    title: "Digital Decluttering Tips",
-    likes: 112,
-    reviews_count: 13,
-    status: "pending",
-  },
-  {
-    title: "Chocolate Chip Cookies",
-    likes: 275,
-    reviews_count: 58,
-    status: "delivered",
-  },
-  {
-    title: "Simple Home Workouts",
-    likes: 155,
-    reviews_count: 21,
-    status: "delivered",
-  },
-  {
-    title: "Beginner's Guide to Investing",
-    likes: 200,
-    reviews_count: 37,
-    status: "delivered",
-  },
-  {
-    title: "Zero Waste Lifestyle",
-    likes: 175,
-    reviews_count: 25,
-    status: "pending",
-  },
-  {
-    title: "Quick Pasta Recipes",
-    likes: 340,
-    reviews_count: 63,
-    status: "delivered",
-  },
-  {
-    title: "Photography for Beginners",
-    likes: 198,
-    reviews_count: 30,
-    status: "delivered",
-  },
-  {
-    title: "Easy Gardening Tips",
-    likes: 145,
-    reviews_count: 18,
-    status: "pending",
-  },
-  {
-    title: "Freelance Portfolio Guide",
-    likes: 172,
-    reviews_count: 24,
-    status: "delivered",
-  },
-  {
-    title: "Street Food Around the World",
-    likes: 289,
-    reviews_count: 49,
-    status: "delivered",
-  },
-  {
-    title: "Simple Mindful Habits",
-    likes: 110,
-    reviews_count: 14,
-    status: "pending",
-  },
-  {
-    title: "Homemade Pizza Secrets",
-    likes: 325,
-    reviews_count: 56,
-    status: "delivered",
-  },
-  {
-    title: "Camping Essentials Checklist",
-    likes: 260,
-    reviews_count: 42,
-    status: "delivered",
-  },
-  {
-    title: "Minimalist Wardrobe Guide",
-    likes: 135,
-    reviews_count: 15,
-    status: "pending",
-  },
-  {
-    title: "Budget-Friendly Recipes",
-    likes: 198,
-    reviews_count: 29,
-    status: "delivered",
-  },
-  {
-    title: "Simple Stress Relief Exercises",
-    likes: 178,
-    reviews_count: 20,
-    status: "pending",
-  },
-  {
-    title: "Morning Routines for Success",
-    likes: 245,
-    reviews_count: 33,
-    status: "delivered",
-  },
-  {
-    title: "Smoothie Bowl Ideas",
-    likes: 188,
-    reviews_count: 27,
-    status: "delivered",
-  },
-];
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useAxios } from "@/hooks/useAxios";
+import { toast } from "sonner";
+import Empty from "@/components/error/Empty";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
 
 const RequestedMeals = () => {
+  const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [mealId, setMealId] = useState("");
+
+  const { axiosInstance } = useAxios();
+
+  const queryClient = useQueryClient();
+
+  const deleteMeals = async () => {
+    try {
+      setIsLoading(true);
+
+      const { data } = await axiosInstance({
+        url: "meals/request/user",
+        method: "DELETE",
+        data: { mealId },
+      });
+
+      if (!data.success) {
+        throw new Error(data.message);
+      }
+
+      queryClient.refetchQueries({
+        queryKey: ["user-requests"],
+      });
+
+      setOpen(false);
+      setMealId("");
+      toast.success(data.message);
+    } catch (err) {
+      toast.error(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const fetchMeals = async () => {
+    try {
+      const { data } = await axiosInstance({
+        url: "meals/request/user",
+      });
+
+      if (!data.success) {
+        throw new Error(data?.message);
+      }
+
+      return data?.meals;
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  const { data, isPending } = useQuery({
+    queryKey: ["user-requests"],
+    queryFn: fetchMeals,
+  });
+
   const columnsDef = useMemo(
     () => [
       {
@@ -257,7 +151,10 @@ const RequestedMeals = () => {
               className={
                 "text-destructive hover:bg-transparent hover:text-destructive"
               }
-              onClick={() => console.log(cell)}
+              onClick={() => {
+                setMealId(cell?.row?.original?._id);
+                setOpen(true);
+              }}
             >
               <X className="size-5" />
             </Button>
@@ -268,10 +165,44 @@ const RequestedMeals = () => {
     []
   );
 
+  if (isPending) {
+    return (
+      <div className="h-[500px] grid place-items-center">
+        <Loader className="text-primary animate-spin size-12" />
+      </div>
+    );
+  }
+
   return (
-    <div className="bg-white rounded-md p-4">
-      <DataTable data={data} columns={columnsDef} />
-    </div>
+    <>
+      <div className="bg-white rounded-md p-4">
+        {data?.length === 0 ? (
+          <Empty title={"You have not requested any meals"} />
+        ) : (
+          <DataTable data={data} columns={columnsDef} />
+        )}
+      </div>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="border-border">
+          <DialogHeader>
+            <DialogTitle>Are you absolutely sure?</DialogTitle>
+            <DialogDescription>This action cannot be undone.</DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button
+              variant={"outline"}
+              className={"hover:bg-muted/10 text-dark border-border"}
+              onClick={() => setOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button onClick={deleteMeals} disabled={isLoading}>
+              Continue
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };
 

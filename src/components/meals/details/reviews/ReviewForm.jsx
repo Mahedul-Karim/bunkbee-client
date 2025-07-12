@@ -14,7 +14,7 @@ const ReviewForm = ({ title, likes, id, reviews_count }) => {
   const { user } = useStore();
 
   const [rating, setRating] = useState(0);
-  const [hoverRating, setHoverRating] = useState(0);
+  const [hoverRating, setHoverRating] = useState("");
 
   const [review, setReview] = useState("");
 
@@ -55,6 +55,9 @@ const ReviewForm = ({ title, likes, id, reviews_count }) => {
 
       queryClient.refetchQueries({
         queryKey: [`meal-${id}`],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["user-reviews"],
       });
 
       toast.success(data.message);

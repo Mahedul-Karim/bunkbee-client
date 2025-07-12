@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { useAxios } from "@/hooks/useAxios";
 import { formatCurrency } from "@/lib/utils";
 import { useStore } from "@/store/Provider";
+import { useQueryClient } from "@tanstack/react-query";
 import { Loader } from "lucide-react";
 import React, { useState } from "react";
 import { toast } from "sonner";
@@ -12,6 +13,8 @@ const Action = ({ price, title, category, image, likes, reviews_count }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const { axiosInstance } = useAxios();
+
+  const queryClient = useQueryClient();
 
   const handleMealRequest = async () => {
     if (!user) {
@@ -38,6 +41,9 @@ const Action = ({ price, title, category, image, likes, reviews_count }) => {
       }
 
       toast.success(data.message);
+      queryClient.invalidateQueries({
+        queryKey: ["user-requests"],
+      });
     } catch (err) {
       toast.error(err.message);
     } finally {
