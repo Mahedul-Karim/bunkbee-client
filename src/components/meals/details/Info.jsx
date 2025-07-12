@@ -8,6 +8,7 @@ import ReviewCard from "./reviews/ReviewCard";
 import ReviewForm from "./reviews/ReviewForm";
 
 const Info = ({
+  id,
   title,
   category,
   ingredients,
@@ -18,7 +19,8 @@ const Info = ({
   distributor_avatar,
   rating,
   reviews_count,
-  reviews=[]
+  reviews = [],
+  likes,
 }) => {
   return (
     <div className="space-y-2">
@@ -80,17 +82,27 @@ const Info = ({
           Reviews ({reviews_count})
         </h2>
         <div className="flex flex-col gap-4 my-4">
-          {reviews?.length > 0 && reviews?.map((_, i) => (
-            <ReviewCard key={i} />
-          ))}
+          {reviews?.length > 0 &&
+            reviews?.map((rev, i) => (
+              <ReviewCard
+                key={i}
+                rating={rev.rating}
+                review={rev.review}
+                reviewerName={rev.reviewerName}
+                reviewerAvatar={rev.reviewerAvatar}
+              />
+            ))}
         </div>
       </section>
       <section className="bg-background p-4 rounded-2xl mt-4">
-        <h2 className="text-xl font-bold text-dark">
-          Write a Review
-        </h2>
+        <h2 className="text-xl font-bold text-dark">Write a Review</h2>
         <div className="my-4">
-          <ReviewForm />
+          <ReviewForm
+            title={title}
+            likes={likes}
+            id={id}
+            reviews_count={reviews_count}
+          />
         </div>
       </section>
     </div>

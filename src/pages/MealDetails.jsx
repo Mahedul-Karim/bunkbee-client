@@ -26,7 +26,7 @@ const MealDetails = () => {
   };
 
   const { data, isPending } = useQuery({
-    queryKey: [`meal-${mealId}`, mealId],
+    queryKey: [`meal-${mealId}`],
     queryFn: fetchSingleMeal,
     retry: false,
   });
@@ -54,6 +54,7 @@ const MealDetails = () => {
         />
         <main className="grid sm:grid-cols-[1fr_200px] md:grid-cols-[1fr_250px] lg:grid-cols-[1fr_300px] mt-4 gap-4">
           <Info
+            id={data?.meal?._id}
             title={data?.meal?.title}
             category={data?.meal?.category}
             ingredients={data?.meal?.ingredients}
@@ -65,6 +66,7 @@ const MealDetails = () => {
             rating={data?.meal?.rating}
             reviews_count={data?.meal?.reviews_count}
             reviews={data?.reviews}
+            likes={data?.meal?.likes}
           />
           <Action
             price={data?.meal?.price}
