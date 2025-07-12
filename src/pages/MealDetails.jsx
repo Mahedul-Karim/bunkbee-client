@@ -70,6 +70,9 @@ const MealDetails = () => {
             price={data?.meal?.price}
             title={data?.meal?.title}
             category={data?.meal?.category}
+            image={data?.meal?.image}
+            reviews_count={data?.meal?.reviews_count}
+            likes={data?.meal?.likes}
           />
         </main>
       </section>
