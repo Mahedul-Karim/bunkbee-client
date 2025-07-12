@@ -31,7 +31,7 @@ const Pricing = () => {
           timeoutRef.current = setTimeout(() => {
             searchParams.set("price", val?.join("-"));
             setSearchParams(searchParams);
-          }, 300);
+          }, 600);
 
           setRangeValue(val);
         }}
