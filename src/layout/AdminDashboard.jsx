@@ -62,7 +62,7 @@ const AdminDashboard = () => {
             </Avatar>
           </section>
         </header>
-        <section className="py-6 h-[calc(100vh_-_70px)] overflow-auto">
+        <section className="py-6 h-[calc(100%_-_70px)] overflow-auto">
           <div className="l-container">
             <Outlet />
           </div>

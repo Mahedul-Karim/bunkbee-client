@@ -51,7 +51,7 @@ export const router = createBrowserRouter([
       {
         path: "/checkout/:type",
         element: (
-          <PrivateRoutes>
+          <PrivateRoutes routeFor={["user", "admin"]}>
             <Checkout />,
           </PrivateRoutes>
         ),
@@ -61,7 +61,7 @@ export const router = createBrowserRouter([
   {
     path: "/user/dashboard",
     element: (
-      <PrivateRoutes routeFor={"user"}>
+      <PrivateRoutes routeFor={["user"]}>
         <UserDashboard />
       </PrivateRoutes>
     ),
@@ -87,7 +87,7 @@ export const router = createBrowserRouter([
   {
     path: "/admin/dashboard",
     element: (
-      <PrivateRoutes routeFor={"admin"}>
+      <PrivateRoutes routeFor={["admin"]}>
         <AdminDashboard />
       </PrivateRoutes>
     ),

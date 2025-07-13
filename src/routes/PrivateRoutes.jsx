@@ -4,7 +4,7 @@ import React from "react";
 import { Navigate } from "react-router";
 import { toast } from "sonner";
 
-const PrivateRoutes = ({ children, routeFor }) => {
+const PrivateRoutes = ({ children, routeFor = [] }) => {
   const { user, isLoading } = useStore();
 
   if (isLoading) {
@@ -19,7 +19,7 @@ const PrivateRoutes = ({ children, routeFor }) => {
     return <Navigate to={"/login"} />;
   }
 
-  if (!isLoading && user?.role !== routeFor) {
+  if (!isLoading && !routeFor?.includes(user?.role)) {
     toast.error("You are not authorized to access this resources");
 
     return <Navigate to={"/"} />;

@@ -19,7 +19,11 @@ import { useAxios } from "@/hooks/useAxios";
 import { toast } from "sonner";
 import { Loader } from "lucide-react";
 
-const AddMealForm = () => {
+const AddMealForm = ({
+  existingMeal,
+  isMealUpdate = false,
+  onUpdateSuccess,
+}) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const { axiosInstance } = useAxios();
@@ -29,13 +33,13 @@ const AddMealForm = () => {
   const form = useForm({
     resolver: zodResolver(mealSchema),
     defaultValues: {
-      title: "",
-      category: "",
-      image: "",
-      ingredients: [],
-      description: "",
-      price: "",
-      status: "",
+      title: existingMeal?.title || "",
+      category: existingMeal?.category || "",
+      image: existingMeal?.image || "",
+      ingredients: existingMeal?.ingredients || [],
+      description: existingMeal?.description || "",
+      price: existingMeal?.price?.toString() || "",
+      status: existingMeal?.status || "",
     },
   });
 
@@ -43,7 +47,15 @@ const AddMealForm = () => {
     try {
       setIsLoading(true);
 
-      const { title, category, image, ingredients, price, status } = values;
+      const {
+        title,
+        category,
+        image,
+        ingredients,
+        price,
+        status,
+        description,
+      } = values;
 
       const formData = new FormData();
 
@@ -53,6 +65,25 @@ const AddMealForm = () => {
       formData.append("ingredients", ingredients);
       formData.append("price", price);
       formData.append("status", status);
+      formData.append("description", description);
+
+      if (isMealUpdate) {
+        if (image === existingMeal?.image) {
+          formData.delete("image");
+        } else {
+          formData.append("image_id", existingMeal?.image_id || "");
+        }
+
+        const { data } = await axiosInstance({
+          url: `meals/${existingMeal?._id}`,
+          data: formData,
+          method: "PATCH",
+        });
+
+        toast.success(data.message);
+        onUpdateSuccess();
+        return;
+      }
 
       const { data } = await axiosInstance({
         url: "meals",
