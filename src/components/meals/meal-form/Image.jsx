@@ -44,7 +44,11 @@ const Image = ({ form }) => {
               {image && (
                 <div className="size-30 rounded-2xl shrink-0 relative">
                   <img
-                    src={URL.createObjectURL(image)}
+                    src={
+                      typeof image === "string"
+                        ? image
+                        : URL.createObjectURL(image)
+                    }
                     className="w-full h-full object-cover object-center rounded-2xl"
                   />
                   <div className="absolute top-1 right-1">

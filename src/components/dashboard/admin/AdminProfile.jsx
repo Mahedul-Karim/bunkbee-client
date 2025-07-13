@@ -28,7 +28,9 @@ const AdminProfile = () => {
             </Badge>
           </div>
           <p className="text-sm text-muted mt-1">{user?.email}</p>
-          <Badge className="font-semibold capitalize rounded-full mt-2">30 meals added</Badge>
+          <Badge className="font-semibold capitalize rounded-full mt-2">
+            {user?.mealsAdded} meals added
+          </Badge>
         </CardContent>
       </Card>
     </div>

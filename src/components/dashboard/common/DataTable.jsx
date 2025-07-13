@@ -18,7 +18,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-const DataTable = ({ data, columns }) => {
+const DataTable = ({ data=[], columns }) => {
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 10,

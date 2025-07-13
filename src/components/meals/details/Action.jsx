@@ -44,6 +44,10 @@ const Action = ({ price, title, category, image, likes, reviews_count }) => {
       queryClient.invalidateQueries({
         queryKey: ["user-requests"],
       });
+
+      queryClient.invalidateQueries({
+        queryKey: ["user-transactions"],
+      });
     } catch (err) {
       toast.error(err.message);
     } finally {
