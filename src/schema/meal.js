@@ -11,5 +11,4 @@ export const mealSchema = z.object({
   ingredients: z.array(z.string()).min(1, "At least on ingredient is required"),
   description: z.string().min(1, "Description is required!"),
   price: z.string().min(1, "Meal price is required"),
-  status: z.string().min(1, "Status is required"),
 });

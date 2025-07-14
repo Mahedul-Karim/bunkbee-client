@@ -6,7 +6,7 @@ import { Heart } from "lucide-react";
 import React, { useState } from "react";
 import { toast } from "sonner";
 
-const Image = ({ id, src, status, likes = 0 }) => {
+const Image = ({ id, src,  likes = 0 }) => {
   const [like, setLike] = useState(likes);
 
   const { user } = useStore();
@@ -42,11 +42,6 @@ const Image = ({ id, src, status, likes = 0 }) => {
         alt=""
         className="max-h-[500px] w-full object-cover object-center rounded-2xl"
       />
-      <div className="absolute top-2 left-2">
-        <Badge className={"rounded-full bg-accent text-dark font-semibold"}>
-          {status}
-        </Badge>
-      </div>
       <div className="absolute top-2 right-2">
         <Button
           onClick={handleLikes}

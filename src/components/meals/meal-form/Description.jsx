@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import {
   FormControl,
   FormField,
@@ -6,24 +6,28 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Textarea } from '@/components/ui/textarea';
+import { Textarea } from "@/components/ui/textarea";
 
-const Description = ({form}) => {
+const Description = ({ form }) => {
   return (
-     <FormField
-          control={form?.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Description</FormLabel>
-              <FormControl>
-                <Textarea placeholder="Describe the meal" className="h-30" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-  )
-}
+    <FormField
+      control={form?.control}
+      name="description"
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel>Description</FormLabel>
+          <FormControl>
+            <Textarea
+              placeholder="Describe the meal"
+              className="h-30"
+              {...field}
+            />
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+  );
+};
 
-export default Description
+export default Description;

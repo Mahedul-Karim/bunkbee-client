@@ -171,7 +171,7 @@ const ServeMeal = () => {
         },
       },
     ],
-    []
+    [isLoading]
   );
 
   return (

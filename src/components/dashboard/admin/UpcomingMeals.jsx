@@ -1,29 +1,77 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import DataTable from "../common/DataTable";
 import { Badge } from "@/components/ui/badge";
-import { BookCheck, Heart } from "lucide-react";
+import { BookCheck, Heart, Loader, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const data = [
-  {
-    title: "Grilled Salmon with Herbs",
-    likes: 245,
-    status: "upcoming",
-    category: "Lunch",
-    price: 24.99,
-    image: "https://i.ibb.co/HTMnZMqF/meal-26.jpg",
-  },
-  {
-    title: "Truffle Mushroom Risotto",
-    likes: 189,
-    category: "Dinner",
-    status: "upcoming",
-    price: 22.5,
-    image: "https://i.ibb.co/TxbzgWNR/meal-27.webp",
-  },
-];
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import AddMealForm from "@/components/meals/AddMealForm";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { useAxios } from "@/hooks/useAxios";
 
 const UpcomingMeals = () => {
+  const [open, setOpen] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const queryClient = useQueryClient();
+
+  const { axiosInstance } = useAxios();
+
+  const updateMeals = async (mealId) => {
+    try {
+      setIsLoading(true);
+
+      const { data } = await axiosInstance({
+        url: "meals/upcoming/admin",
+        method: "PATCH",
+        data: { mealId },
+      });
+
+      if (!data.success) {
+        throw new Error(data?.message);
+      }
+
+      queryClient.refetchQueries({
+        queryKey: ["admin-upcoming-meals"],
+      });
+
+      toast.success(data.message);
+    } catch (err) {
+      toast.error(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const fetchUpcomingMeals = async () => {
+    try {
+      const { data } = await axiosInstance({
+        url: "meals/upcoming/admin",
+      });
+
+      if (!data.success) {
+        throw new Error(data?.message);
+      }
+
+      return data?.meals;
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  const { data, isPending } = useQuery({
+    queryKey: ["admin-upcoming-meals"],
+    queryFn: fetchUpcomingMeals,
+  });
+
   const columnsDef = useMemo(
     () => [
       {
@@ -38,22 +86,31 @@ const UpcomingMeals = () => {
                 className="size-10 rounded-lg object-cover"
               />
               <div>
-                <div className="font-medium text-dark whitespace-pre-wrap line-clamp-2">
+                <div className="font-semibold capitalize text-dark whitespace-pre-wrap line-clamp-2">
                   {cell?.row?.original.title}
-                </div>
-                <div className="text-sm">
-                  <Badge
-                    variant="outline"
-                    className="border-border rounded-full"
-                  >
-                    {cell?.row?.original?.category}
-                  </Badge>
-                  <span className="ml-2 text-muted">
-                    ${cell?.row?.original?.price}
-                  </span>
                 </div>
               </div>
             </div>
+          );
+        },
+      },
+      {
+        accessorKey: "category",
+        header: "Category",
+        cell: ({ cell }) => {
+          return (
+            <Badge variant="outline" className="border-border rounded-full">
+              {cell?.row?.original?.category}
+            </Badge>
+          );
+        },
+      },
+      {
+        accessorKey: "price",
+        header: "Price",
+        cell: ({ cell }) => {
+          return (
+            <span className="text-muted">${cell?.row?.original?.price}</span>
           );
         },
       },
@@ -69,36 +126,65 @@ const UpcomingMeals = () => {
           );
         },
       },
-      {
-        accessorKey: "status",
-        header: "Status",
-        cell: ({ cell }) => {
-          return (
-            <Badge className={"rounded-full bg-yellow-100 text-yellow-800"}>
-              {cell?.row?.original?.status}
-            </Badge>
-          );
-        },
-      },
 
       {
         id: "action",
         header: "",
-        cell: () => {
+        cell: ({ cell }) => {
+          const id = cell?.row?.original?._id;
+
           return (
-            <Button className="bg-zinc-900 hover:bg-zinc-900">
-              <BookCheck /> Publish
+            <Button
+              className="bg-zinc-900 hover:bg-zinc-900"
+              disabled={isLoading}
+              onClick={() => updateMeals(id)}
+            >
+              {isLoading ? <Loader className="animate-spin" /> : <BookCheck />}{" "}
+              Publish
             </Button>
           );
         },
       },
     ],
-    []
+    [isLoading]
   );
 
   return (
     <div className="bg-white rounded-md p-4">
-      <DataTable data={data} columns={columnsDef} />
+      <div className="flex justify-end mb-4">
+        <Button
+          className="bg-zinc-900 hover:bg-zinc-900 font-semibold"
+          onClick={() => setOpen(true)}
+        >
+          <Plus /> Add Meal
+        </Button>
+      </div>
+      {isPending ? (
+        <div className="h-[500px] grid place-items-center">
+          <Loader className="animate-spin size-12 text-primary" />
+        </div>
+      ) : (
+        <DataTable data={data} columns={columnsDef} />
+      )}
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="border-border max-h-[80vh] overflow-auto">
+          <DialogHeader>
+            <DialogTitle>Add an Upcoming Meal</DialogTitle>
+            <DialogDescription className={"sr-only"}>
+              They will have full access to all resources
+            </DialogDescription>
+          </DialogHeader>
+          <AddMealForm
+            isUpcomingMeal
+            onUpcomingSuccess={() => {
+              queryClient.refetchQueries({
+                queryKey: ["admin-upcoming-meals"],
+              });
+              setOpen(false);
+            }}
+          />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

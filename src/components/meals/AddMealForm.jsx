@@ -10,7 +10,6 @@ import Category from "./meal-form/Category";
 import Image from "./meal-form/Image";
 import Ingredients from "./meal-form/Ingredients";
 import Description from "./meal-form/Description";
-import Status from "./meal-form/Status";
 import { useStore } from "@/store/Provider";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
@@ -18,17 +17,22 @@ import Price from "./meal-form/Price";
 import { useAxios } from "@/hooks/useAxios";
 import { toast } from "sonner";
 import { Loader } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
 
 const AddMealForm = ({
   existingMeal,
   isMealUpdate = false,
   onUpdateSuccess,
+  isUpcomingMeal = false,
+  onUpcomingSuccess,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const { axiosInstance } = useAxios();
 
   const { user } = useStore();
+
+  const queryClient = useQueryClient();
 
   const form = useForm({
     resolver: zodResolver(mealSchema),
@@ -39,7 +43,6 @@ const AddMealForm = ({
       ingredients: existingMeal?.ingredients || [],
       description: existingMeal?.description || "",
       price: existingMeal?.price?.toString() || "",
-      status: existingMeal?.status || "",
     },
   });
 
@@ -47,15 +50,8 @@ const AddMealForm = ({
     try {
       setIsLoading(true);
 
-      const {
-        title,
-        category,
-        image,
-        ingredients,
-        price,
-        status,
-        description,
-      } = values;
+      const { title, category, image, ingredients, price, description } =
+        values;
 
       const formData = new FormData();
 
@@ -64,7 +60,6 @@ const AddMealForm = ({
       formData.append("image", image);
       formData.append("ingredients", ingredients);
       formData.append("price", price);
-      formData.append("status", status);
       formData.append("description", description);
 
       if (isMealUpdate) {
@@ -85,6 +80,19 @@ const AddMealForm = ({
         return;
       }
 
+      if (isUpcomingMeal) {
+        const { data } = await axiosInstance({
+          url: `meals/upcoming/meal`,
+          method: "POST",
+          data: formData,
+        });
+
+        toast.success(data.message);
+        onUpcomingSuccess();
+
+        return;
+      }
+
       const { data } = await axiosInstance({
         url: "meals",
         data: formData,
@@ -92,6 +100,7 @@ const AddMealForm = ({
       });
 
       toast.success(data?.message);
+      queryClient.invalidateQueries();
 
       form.reset();
     } catch (err) {
@@ -108,9 +117,8 @@ const AddMealForm = ({
         <Category form={form} />
         <Image form={form} />
         <Ingredients form={form} />
-        <Description />
-        <Status />
-        <Price />
+        <Description form={form} />
+        <Price form={form} />
         <div className="grid gap-2">
           <Label>Distributor Name</Label>
           <Input disabled value={user?.fullName} />

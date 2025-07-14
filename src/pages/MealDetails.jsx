@@ -49,7 +49,6 @@ const MealDetails = () => {
         <Image
           id={data?.meal?._id}
           src={data?.meal?.image}
-          status={data?.meal?.status}
           likes={data?.meal?.likes}
         />
         <main className="grid sm:grid-cols-[1fr_200px] md:grid-cols-[1fr_250px] lg:grid-cols-[1fr_300px] mt-4 gap-4">

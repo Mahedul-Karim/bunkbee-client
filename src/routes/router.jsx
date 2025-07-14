@@ -21,6 +21,7 @@ import AllReviews from "@/components/dashboard/admin/AllReviews";
 import ServeMeal from "@/components/dashboard/admin/ServeMeal";
 import UpcomingMeals from "@/components/dashboard/admin/UpcomingMeals";
 import Checkout from "@/pages/Checkout";
+import UpcomingMealsPage from "@/pages/UpcomingMealsPage";
 
 export const router = createBrowserRouter([
   {
@@ -55,6 +56,10 @@ export const router = createBrowserRouter([
             <Checkout />,
           </PrivateRoutes>
         ),
+      },
+      {
+        path: "/upcoming-meals",
+        element: <UpcomingMealsPage />,
       },
     ],
   },

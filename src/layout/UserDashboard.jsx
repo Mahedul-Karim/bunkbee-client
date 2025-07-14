@@ -47,8 +47,8 @@ const UserDashboard = () => {
             </Avatar>
           </section>
         </header>
-        <section className="py-6 h-[calc(100vh_-_70px)] overflow-auto">
-          <div className="l-container">
+        <section className="h-[calc(100%_-_70px)] overflow-auto">
+          <div className="l-container py-6 ">
             <Outlet />
           </div>
         </section>
