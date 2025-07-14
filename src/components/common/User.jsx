@@ -19,8 +19,6 @@ import { auth } from "@/lib/config/firebase.config";
 const User = () => {
   const { user, setUser, setToken } = useStore();
 
-  const fallBack = user?.fullName?.split(" ");
-
   const { axiosInstance } = useAxios();
 
   const handleLogout = async () => {
@@ -48,7 +46,10 @@ const User = () => {
           <AvatarImage src={user?.avatar} />
           <AvatarFallback className={"bg-gray-200"}>
             {" "}
-            {fallBack?.[0]?.[0] + fallBack?.[1]?.[0]}
+            {user?.fullName
+              ?.split(" ")
+              ?.map((name) => name[0])
+              .join("")}
           </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
