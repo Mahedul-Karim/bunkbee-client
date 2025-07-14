@@ -1,12 +1,45 @@
-# React + Vite
+# 🌟 Project Name and Purpose
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+BunkBEE - is a platform for managing hostel and meals and get proper review for the meals from hostel students.
 
-Currently, two official plugins are available:
+## 🔗 Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+👉 [Live URL](https://bunkbee-client.vercel.app/)
 
-## Expanding the ESLint configuration
+## 🧪 Test Credentials
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+| Role       | Email                 | Password   |
+|------------|-----------------------|------------|
+| Admin      | test@gmail.com        | test1234   |
+| User       | test2@gmail.com       | test1234    |
+
+
+
+## 🚀 Key Features
+
+- It is a hostel meal management system.
+- Admin can create meals from dashboard.
+- Students can request these meals.
+- Admin can server the requested meals.
+- Students can search meals, filter by category or filter by price.
+- Three premium packages.
+- Student's can purchase those package through stripe payment.
+- The student who purchase the package can see upcoming meals and like them
+- In user dashboard, they can see their full transaction history.
+- Admin can make other users admin or demote other admins to user.
+
+
+## 📦 NPM Packages Used
+
+List the key packages with a short reason why they’re used:
+
+- `React` - For the ui
+- `axios` – For making HTTP requests
+- `gsap` - For animation
+- `Firebase` - For authentication
+- `Shadcn UI` - To build the interface
+- `react-infinite-scroll-component` - For infinite scroll on all meals page
+- `react hook form` - For handling form
+- `zod` - For data validation
+- `@tanstack/react-query` - For data fetching and caching
+- `stripe` - For payment.
