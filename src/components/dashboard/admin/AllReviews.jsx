@@ -25,7 +25,7 @@ const AllReviews = () => {
 
   const queryClient = useQueryClient();
 
-  const deleteMeals = async () => {
+  const deleteReviews = async () => {
     try {
       setIsLoading(true);
 
@@ -206,7 +206,7 @@ const AllReviews = () => {
             >
               Cancel
             </Button>
-            <Button onClick={deleteMeals} disabled={isLoading}>
+            <Button onClick={deleteReviews} disabled={isLoading}>
               Continue
             </Button>
           </DialogFooter>

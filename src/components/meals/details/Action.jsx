@@ -31,7 +31,7 @@ const Action = ({ price, title, category, image, likes, reviews_count }) => {
       setIsLoading(true);
 
       const { data } = await axiosInstance({
-        url: "meals/request",
+        url: "meals/request/meals",
         method: "POST",
         data: { title, category, image, likes, reviews_count, price },
       });

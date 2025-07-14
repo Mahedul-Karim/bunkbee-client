@@ -1,33 +1,81 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, Utensils } from "lucide-react";
-import React, { useMemo } from "react";
+import { CheckCircle, Loader, SearchIcon, Utensils } from "lucide-react";
+import React, { useEffect, useMemo, useState } from "react";
 import DataTable from "../common/DataTable";
-
-const data = [
-  {
-    title: "Grilled Salmon with Herbs",
-    category: "Lunch",
-    price: 24.99,
-    image: "https://i.ibb.co/HTMnZMqF/meal-26.jpg",
-    requesterName: "Alex Kim",
-    requesterAvatar: "https://i.ibb.co/4khYDKG/leo.jpg",
-    requesterEmail: "alex.k@email.com",
-    status: "pending",
-  },
-  {
-    title: "Truffle Mushroom Risotto",
-    category: "Dinner",
-    price: 22.5,
-    image: "https://i.ibb.co/TxbzgWNR/meal-27.webp",
-    requesterName: "Alex Kim",
-    requesterAvatar: "https://i.ibb.co/4khYDKG/leo.jpg",
-    requesterEmail: "alex.k@email.com",
-    status: "delivered",
-  },
-];
+import { Input } from "@/components/ui/input";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useAxios } from "@/hooks/useAxios";
+import { toast } from "sonner";
 
 const ServeMeal = () => {
+  const [search, setSearch] = useState("");
+  const [debounced, setDebounced] = useState("");
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const queryClient = useQueryClient();
+
+  const { axiosInstance } = useAxios();
+
+  const updateMeals = async (mealId) => {
+    try {
+      setIsLoading(true);
+
+      const { data } = await axiosInstance({
+        url: "meals/request/meals",
+        method: "PATCH",
+        data: { mealId },
+      });
+
+      if (!data.success) {
+        throw new Error(data?.message);
+      }
+
+      queryClient.refetchQueries({
+        queryKey: ["all-request", debounced],
+      });
+
+      toast.success(data.message);
+    } catch (err) {
+      toast.error(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const fetchRequests = async () => {
+    try {
+      const { data } = await axiosInstance({
+        url: "meals/request/meals",
+        params: {
+          search,
+        },
+      });
+
+      if (!data.success) {
+        throw new Error(data?.message);
+      }
+
+      return data?.requestedMeals;
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  const { data, isPending } = useQuery({
+    queryKey: ["all-request", debounced],
+    queryFn: fetchRequests,
+  });
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setDebounced(search);
+    }, 600);
+
+    return () => clearTimeout(timeout);
+  }, [search]);
+
   const columnsDef = useMemo(
     () => [
       {
@@ -111,8 +159,13 @@ const ServeMeal = () => {
           const stat = cell?.row?.original?.status;
 
           return (
-            <Button className={"bg-zinc-900"} disabled={stat === "delivered"}>
-              <Utensils /> Server
+            <Button
+              className={"bg-zinc-900 hover:bg-zinc-900"}
+              disabled={stat === "delivered" || isLoading}
+              onClick={() => updateMeals(cell?.row?.original?._id)}
+            >
+              {isLoading ? <Loader className="animate-spin" /> : <Utensils />}{" "}
+              Serve
             </Button>
           );
         },
@@ -123,7 +176,25 @@ const ServeMeal = () => {
 
   return (
     <div className="bg-white rounded-md p-4">
-      <DataTable data={data} columns={columnsDef} />
+      <div className="mb-4 flex justify-end">
+        <div className="flex items-center bg-white rounded-md h-10 pr-2 border border-border max-w-[350px]">
+          <Input
+            type={"text"}
+            className="bg-transparent shadow-none border-none text-dark"
+            placeholder="Search by name or email"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <SearchIcon className="text-muted" />
+        </div>
+      </div>
+      {isPending ? (
+        <div className="h-[500px] grid place-items-center">
+          <Loader className="animate-spin size-12 text-primary" />
+        </div>
+      ) : (
+        <DataTable data={data} columns={columnsDef} />
+      )}
     </div>
   );
 };
