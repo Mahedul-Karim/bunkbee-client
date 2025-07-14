@@ -12,7 +12,7 @@ export const axiosInstance = axios.create({
 export const useAxios = () => {
   const { token } = useStore();
 
-  axios.interceptors.request.use((config) => {
+  axiosInstance.interceptors.request.use((config) => {
     config.headers.Authorization = `Bearer ${token}`;
     return config;
   });
