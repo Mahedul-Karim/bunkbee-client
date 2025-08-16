@@ -12,7 +12,7 @@ const Header = () => {
   const { user } = useStore();
 
   return (
-    <header>
+    <header className="sticky top-0 w-full z-[2] bg-white">
       <section className="l-container py-4 flex items-center justify-between">
         <Logo />
         <Nav />
