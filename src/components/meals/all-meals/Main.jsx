@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import MealsCard from "../MealsCard";
 import { useAxios } from "@/hooks/useAxios";
 import { useInfiniteQuery } from "@tanstack/react-query";
@@ -6,8 +6,19 @@ import { Loader } from "lucide-react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useSearchParams } from "react-router";
 import Empty from "@/components/error/Empty";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const Main = () => {
+  const [sortBy, setSortBy] = useState("");
+
+  // const [allMeals,setAllMeals] = useState([])
+
   const { axiosInstance } = useAxios();
 
   const [searchParams] = useSearchParams();
@@ -40,7 +51,27 @@ const Main = () => {
     },
   });
 
-  const allMeals = data?.pages?.flatMap((page) => page.meals) || [];
+  useEffect(() => {}, [data?.pages]);
+
+  const allMeals = useMemo(() => {
+    const allData = data?.pages?.flatMap((page) => page.meals) || [];
+
+    if (allData.length === 0) {
+      return allData;
+    }
+
+    if (!sortBy) {
+      return allData;
+    }
+
+    if (sortBy === "asc") {
+      return allData.sort((a, b) => a.price - b.price);
+    }
+
+    if (sortBy === "dsc") {
+      return allData.sort((a, b) => b.price - a.price);
+    }
+  }, [data?.pages, sortBy]);
 
   if (isLoading) {
     return (
@@ -52,6 +83,17 @@ const Main = () => {
 
   return (
     <main>
+      <div className="mb-4 flex items-center justify-end">
+        <Select value={sortBy} onValueChange={setSortBy}>
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Sort By" />
+          </SelectTrigger>
+          <SelectContent className="border-border">
+            <SelectItem value="asc">Price(low to high)</SelectItem>
+            <SelectItem value="dsc">Price(high to low)</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
       <InfiniteScroll
         dataLength={allMeals.length}
         next={fetchNextPage}
