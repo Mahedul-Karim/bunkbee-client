@@ -3,6 +3,29 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { useStore } from "@/store/Provider";
 import { Badge } from "@/components/ui/badge";
 
+import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
+
+const chartData = [
+  { month: "January", sold: 186 },
+  { month: "February", sold: 305 },
+  { month: "March", sold: 237 },
+  { month: "April", sold: 73 },
+  { month: "May", sold: 209 },
+  { month: "June", sold: 214 },
+];
+
+const chartConfig = {
+  sold: {
+    label: "sold",
+    color: "var(--chart-1)",
+  },
+};
+
 const AdminProfile = () => {
   const { user } = useStore();
 
@@ -33,6 +56,28 @@ const AdminProfile = () => {
           </Badge>
         </CardContent>
       </Card>
+      <div className="p-4 mt-8 bg-white rounded-2xl">
+        <h2 className="text-lg font-bold text-dark">Meals Sold</h2>
+        <div className="mt-8 max-h-[250px]">
+          <ChartContainer config={chartConfig} className={'h-[250px] w-full'}>
+            <BarChart accessibilityLayer data={chartData}>
+              <CartesianGrid vertical={false} />
+              <XAxis
+                dataKey="month"
+                tickLine={false}
+                tickMargin={10}
+                axisLine={false}
+                tickFormatter={(value) => value.slice(0, 3)}
+              />
+              <ChartTooltip
+                cursor={false}
+                content={<ChartTooltipContent hideLabel />}
+              />
+              <Bar dataKey="sold" fill="var(--color-sold)" radius={8} />
+            </BarChart>
+          </ChartContainer>
+        </div>
+      </div>
     </div>
   );
 };
